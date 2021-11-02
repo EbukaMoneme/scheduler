@@ -6,6 +6,7 @@ import Empty from "./Empty";
 import Form from "./Form";
 import Status from "./Status";
 import Confirm from "./Confirm";
+import Error from "./Error";
 import useVisualMode from "hooks/useVisualMode";
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
@@ -14,6 +15,8 @@ const SAVING = "SAVING";
 const DELETING = "DELETING";
 const CONFIRM = "CONFIRM";
 const EDIT = "EDIT";
+const ERROR_SAVE = "ERROR_SAVE";
+const ERROR_DELETE = "ERROR_DELETE";
 
 export default function Appointment(props)  {
 	// State hooks
@@ -24,20 +27,22 @@ export default function Appointment(props)  {
 	
 	//Save function
 	function saveApp(name, interviewer) {
-		transition(SAVING)
 		const interview = {
 			student: name,
 			interviewer
 		};
+		transition(SAVING)
 		bookInterview(id, {...interview})
-			.then(() => { transition(SHOW) })
+			.then(() => transition(SHOW))
+			.catch(error => transition(ERROR_SAVE, true))
 	}
 
 	// Delete function
 	function deleteApp(id) {
-		transition(DELETING)
+		transition(DELETING, true)
 		cancelInterview(id)
-			.then(() => { transition(EMPTY) })
+			.then(() => transition(EMPTY))
+			.catch(error => transition(ERROR_DELETE, true))
 	}
 
   return (
@@ -49,14 +54,13 @@ export default function Appointment(props)  {
 			    student={interview.student}
 			    interviewer={interview.interviewer}
 					onDelete={() => transition(CONFIRM)}
-					onEdit={() => { transition(EDIT) }} 
+					onEdit={() => transition(EDIT)} 
 			  />
 			)}
 			{mode === CREATE && (
 				<Form 
 					interviewers={interviewers} 
 					onSave={saveApp}
-					// onSave={(name, interviewer) => {saveApp(name, interviewer)}} 
 					onCancel={() => back()}
 				/>
 			)}
@@ -72,10 +76,21 @@ export default function Appointment(props)  {
 				<Form 
 					interviewers={interviewers} 
 					onSave={saveApp}
-					// onSave={(name, interviewer) => {saveApp(name, interviewer)}} 
 					onCancel={() => back()}
 					interviewer={interview.interviewer.id}
 					student={interview.student}
+				/>
+			)}
+			{mode === ERROR_SAVE && (
+				<Error
+					message={"An error occured while saving. Try again."}
+					onClose={() => transition(CREATE)}
+				/>
+			)}
+			{mode === ERROR_DELETE && (
+				<Error
+					message={"An error occured while saving. Try again."}
+					onClose={() => transition(SHOW)}
 				/>
 			)}
     </article>

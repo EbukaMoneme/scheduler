@@ -41,7 +41,7 @@ export default function Application(props) {
 				console.log('Interview Booked!')
 				setState({...state, appointments})
 			})
-			.catch((err) => console.log("Failed because:", err))
+			.catch((err) => { throw err })
 	}
 
 	// Cancel interview
@@ -59,7 +59,7 @@ export default function Application(props) {
 				console.log('Interview Deleted!')
 				setState({...state, appointments})
 			})
-			.catch((err) => console.log("Failed because:", err))
+			.catch((err) => { throw err })
 	}
 
 	// Getting daily information - Interviews and Appointments

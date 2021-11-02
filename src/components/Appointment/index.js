@@ -13,6 +13,7 @@ const CREATE = "CREATE";
 const SAVING = "SAVING";
 const DELETING = "DELETING";
 const CONFIRM = "CONFIRM";
+const EDIT = "EDIT";
 
 export default function Appointment(props)  {
 	// State hooks
@@ -32,10 +33,9 @@ export default function Appointment(props)  {
 			.then(() => { transition(SHOW) })
 	}
 
-	// Cancel function
+	// Delete function
 	function deleteApp(id) {
 		transition(DELETING)
-		console.log("Id:", id)
 		cancelInterview(id)
 			.then(() => { transition(EMPTY) })
 	}
@@ -49,13 +49,15 @@ export default function Appointment(props)  {
 			    student={interview.student}
 			    interviewer={interview.interviewer}
 					onDelete={() => transition(CONFIRM)}
+					onEdit={() => { transition(EDIT) }} 
 			  />
 			)}
 			{mode === CREATE && (
 				<Form 
 					interviewers={interviewers} 
-					onSave={(name, interviewer) => {saveApp(name, interviewer)}} 
-					onCancel={() => back()} 
+					onSave={saveApp}
+					// onSave={(name, interviewer) => {saveApp(name, interviewer)}} 
+					onCancel={() => back()}
 				/>
 			)}
 			{mode === SAVING && <Status message={"Loading"} />}
@@ -66,6 +68,16 @@ export default function Appointment(props)  {
 					onCancel={() => back()} 
 					onConfirm={() => deleteApp(id)} 
 				/>)}
+			{mode === EDIT && (
+				<Form 
+					interviewers={interviewers} 
+					onSave={saveApp}
+					// onSave={(name, interviewer) => {saveApp(name, interviewer)}} 
+					onCancel={() => back()}
+					interviewer={interview.interviewer.id}
+					student={interview.student}
+				/>
+			)}
     </article>
   )
 }

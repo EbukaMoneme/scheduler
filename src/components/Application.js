@@ -26,19 +26,16 @@ export default function Application(props) {
 		});
 	}, [])
 
-	//Booking an interview
+	//Book interview
 	function bookInterview(id, interview) {
-		// console.log("id:", id, "interview:", interview)
 		const appointment = {
 			...state.appointments[id],
 			interview: { ...interview }
 		}
-		// console.log('appointment:', appointment)
 		const appointments = {
 			...state.appointments,
 			[id]: appointment
 		};
-		// console.log('appointments:', appointments)
 		return axios.put(`/api/appointments/${id}`, appointment)
 			.then((res) => {
 				console.log('Interview Booked!')
@@ -49,7 +46,6 @@ export default function Application(props) {
 
 	// Cancel interview
 	function cancelInterview(id) {
-		console.log(id)
 		const appointment = {
 			...state.appointments[id],
 			interview: null

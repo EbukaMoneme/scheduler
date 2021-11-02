@@ -25,18 +25,46 @@ export default function Application(props) {
 			setNewState(all[0].data, all[1].data, all[2].data)
 		});
 	}, [])
+
+	//Booking an interview
+	function bookInterview(id, interview) {
+		console.log("id:", id, "interview:", interview)
+		const appointment = {
+			...state.appointments[id],
+			interview: { ...interview }
+		}
+		console.log(appointment)
+		const appointments = {
+			...state.appointments,
+			[id]: appointment
+		};
+		return axios.put(`/api/appointments/${id}`, appointment)
+			.then((res) => {
+				console.log('Interview Booked!')
+				setState({...state, appointments})
+			})
+			.catch((err) => console.log("Failed because:", err))
+	}
+
+	// Cancel interview
+
+	// Getting daily information - Interviews and Appointments
 	const dailyAppointments = getAppointmentsForDay(state, state.day)
 	const dailyInterviewers = getInterviewersForDay(state, state.day)
 	const parsedAppointments = dailyAppointments.map((appointment) => {
 		const interview = getInterview(state, appointment.interview);
+		let key = appointment['id']
 		return (
 			<Appointment 
 				{...appointment}
-				key={appointment.id} 
+				key={key}
 				interview={interview} 
-				interviewers={dailyInterviewers} 
+				interviewers={dailyInterviewers}
+				bookInterview={bookInterview} 
 			/>)
 	})
+
+	// Application component
   return (
     <main className="layout">
       <section className="sidebar">
@@ -61,6 +89,7 @@ export default function Application(props) {
       </section>
       <section className="schedule">
         {parsedAppointments}
+				<Appointment time={'5pm'}/>
       </section>
     </main>
   );

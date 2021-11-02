@@ -28,16 +28,17 @@ export default function Application(props) {
 
 	//Booking an interview
 	function bookInterview(id, interview) {
-		console.log("id:", id, "interview:", interview)
+		// console.log("id:", id, "interview:", interview)
 		const appointment = {
 			...state.appointments[id],
 			interview: { ...interview }
 		}
-		console.log(appointment)
+		// console.log('appointment:', appointment)
 		const appointments = {
 			...state.appointments,
 			[id]: appointment
 		};
+		// console.log('appointments:', appointments)
 		return axios.put(`/api/appointments/${id}`, appointment)
 			.then((res) => {
 				console.log('Interview Booked!')
@@ -47,6 +48,23 @@ export default function Application(props) {
 	}
 
 	// Cancel interview
+	function cancelInterview(id) {
+		console.log(id)
+		const appointment = {
+			...state.appointments[id],
+			interview: null
+		}
+		const appointments = {
+			...state.appointments,
+			[id]: appointment
+		}
+		return axios.delete(`/api/appointments/${id}`)
+			.then((res) => {
+				console.log('Interview Deleted!')
+				setState({...state, appointments})
+			})
+			.catch((err) => console.log("Failed because:", err))
+	}
 
 	// Getting daily information - Interviews and Appointments
 	const dailyAppointments = getAppointmentsForDay(state, state.day)
@@ -61,6 +79,7 @@ export default function Application(props) {
 				interview={interview} 
 				interviewers={dailyInterviewers}
 				bookInterview={bookInterview} 
+				cancelInterview={cancelInterview} 
 			/>)
 	})
 

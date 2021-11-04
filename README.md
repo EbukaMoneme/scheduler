@@ -2,11 +2,11 @@
 
 ## Final Product
 
-!["Monday's Interviews"](https://github.com/EbukaMoneme/tinyapp/blob/master/docs/login-page.png?raw=true)
+!["Monday's Interviews"](https://github.com/EbukaMoneme/scheduler/blob/master/docs/Mondays-Interviews.png?raw=true)
 
-!["New Interview"](https://github.com/EbukaMoneme/tinyapp/blob/master/docs/urls-page.png?raw=true)
+!["New Interview"](https://github.com/EbukaMoneme/scheduler/blob/master/docs/New-Interview.png?raw=true)
 
-!["Updated Interviews"](https://github.com/EbukaMoneme/tinyapp/blob/master/docs/url-show-page.png?raw=true)
+!["Updated Interviews"](https://github.com/EbukaMoneme/scheduler/blob/master/docs/Updated-Interviews.png?raw=true)
 
 ## Setup
 

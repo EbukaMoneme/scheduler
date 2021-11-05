@@ -1,5 +1,14 @@
 # Interview Scheduler
 
+Interview Scheduler is a React application that allows users to book and cancel interviews. We combine a concise API with a WebSocket server to build a realtime experience.
+
+## Technical Specifications
+React
+Webpack, Babel
+Axios, WebSockets
+Axios
+Storybook, Webpack Dev Server, Jest, Testing Library
+
 ## Final Product
 
 !["Monday's Interviews"](https://github.com/EbukaMoneme/scheduler/blob/master/docs/Mondays-Interviews.png?raw=true)

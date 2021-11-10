@@ -38,3 +38,7 @@ npm test
 ```sh
 npm run storybook
 ```
+
+## API
+
+Scheduler-Api repository can be found here: https://github.com/EbukaMoneme/scheduler-api

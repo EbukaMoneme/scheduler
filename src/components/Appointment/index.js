@@ -22,7 +22,7 @@ export default function Appointment(props)  {
 	// State hooks
 	const { id, time, interview, interviewers, bookInterview, cancelInterview } = props;
 	const { mode, transition, back } = useVisualMode(
-		interview? SHOW : EMPTY
+		interview ? SHOW : EMPTY
 	)
 	
 	//Save function
@@ -61,7 +61,7 @@ export default function Appointment(props)  {
 				<Form 
 					interviewers={interviewers} 
 					onSave={saveApp}
-					onCancel={() => back()}
+					onCancel={back}
 				/>
 			)}
 			{mode === SAVING && <Status message={"Loading"} />}
@@ -69,14 +69,14 @@ export default function Appointment(props)  {
 			{mode === CONFIRM && (
 				<Confirm 
 					message={"Are you sure you would like to delete?"} 
-					onCancel={() => back()} 
+					onCancel={back} 
 					onConfirm={() => deleteApp(id)} 
 				/>)}
 			{mode === EDIT && (
 				<Form 
 					interviewers={interviewers} 
 					onSave={saveApp}
-					onCancel={() => back()}
+					onCancel={back}
 					interviewer={interview.interviewer && interview.interviewer.id}
 					student={interview.student}
 				/>
@@ -84,13 +84,13 @@ export default function Appointment(props)  {
 			{mode === ERROR_SAVE && (
 				<Error
 					message={"An error occured while saving. Try again."}
-					onClose={() => transition(CREATE)}
+					onClose={back}
 				/>
 			)}
 			{mode === ERROR_DELETE && (
 				<Error
-					message={"An error occured while saving. Try again."}
-					onClose={() => transition(SHOW)}
+					message={"An error occured while deleting. Try again."}
+					onClose={back}
 				/>
 			)}
     </article>

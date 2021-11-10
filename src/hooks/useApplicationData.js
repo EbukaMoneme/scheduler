@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 export default function useApplicationData() {
+	// state variables
 	const [state, setState] = useState({
 		day: "Monday",
 		days: [],
@@ -9,17 +10,8 @@ export default function useApplicationData() {
 		interviewers: {}
 	})
 	
+	// set day
 	const setDay = day => setState({ ...state, day });
-	useEffect(() => {
-		Promise.all([
-			axios.get('/api/days'),
-			axios.get('/api/appointments'),
-			axios.get('/api/interviewers')
-		]).then((all) => {
-			const setNewState = (days, appointments, interviewers) => setState(prev => ({ ...prev, days, appointments, interviewers }));
-			setNewState(all[0].data, all[1].data, all[2].data)
-		});
-	}, [])
 
 	function updateDailySpots(updatedAppointments) {
 		return state.days.map(eachDay => {
@@ -69,6 +61,18 @@ export default function useApplicationData() {
 			})
 			.catch((err) => { throw err })
 	}
+
+	useEffect(() => {
+		// make requests to scheduler-api and then set state
+		Promise.all([
+			axios.get('/api/days'),
+			axios.get('/api/appointments'),
+			axios.get('/api/interviewers')
+		]).then((all) => {
+			const setNewState = (days, appointments, interviewers) => setState(prev => ({ ...prev, days, appointments, interviewers }));
+			setNewState(all[0].data, all[1].data, all[2].data)
+		});
+	}, [])
 
 	return {
 		state,

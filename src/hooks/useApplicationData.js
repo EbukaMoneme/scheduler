@@ -38,7 +38,6 @@ export default function useApplicationData() {
 
 		return axios.put(`/api/appointments/${id}`, appointment)
 			.then((res) => {
-				console.log('Interview Booked!')
 				setState({...state, appointments, days: updateDailySpots(appointments)})
 			})
 			.catch((err) => { throw err })
@@ -56,7 +55,6 @@ export default function useApplicationData() {
 		}
 		return axios.delete(`/api/appointments/${id}`)
 			.then((res) => {
-				console.log('Interview Deleted!')
 				setState({...state, appointments, days: updateDailySpots(appointments)})
 			})
 			.catch((err) => { throw err })

@@ -34,9 +34,7 @@ export function getInterviewersForDay(state, day) {
 
 export function getInterview(state, interview) {
 	const interviewers = state.interviewers
-	if (!interview) {
-		return interview
-	}
+	if (!interview) return interview
 	const key = interview.interviewer
 	const interviewObject = {
 		student: interview.student,
